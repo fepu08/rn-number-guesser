@@ -1,10 +1,17 @@
 import { StyleSheet, View, TextInput } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
+import { useState } from "react";
 
 const StartGameScreen = () => {
+  const [input, setInput] = useState("");
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
+        value={input}
+        onChaogeText={(text) => {
+          setInput(text);
+        }}
         style={styles.numberInput}
         maxLength={2}
         inputMode={"numeric"}
@@ -12,8 +19,16 @@ const StartGameScreen = () => {
         autoCapitalize={"none"}
         autoCorrect={false}
       />
-      <PrimaryButton>Reset</PrimaryButton>
-      <PrimaryButton>Confirm</PrimaryButton>
+      <PrimaryButton
+        onPress={() => {
+          console.log("pressed");
+        }}
+      >
+        Reset
+      </PrimaryButton>
+      <PrimaryButton onPress={() => console.log("pressed")}>
+        Confirm
+      </PrimaryButton>
     </View>
   );
 };
@@ -23,7 +38,7 @@ const styles = StyleSheet.create({
     padding: 16,
     marginTop: 100,
     marginHorizontal: 24,
-    backgroundColor: "#72063c",
+    backgroundColor: "#4e0329",
     borderRadius: 8,
 
     // android only shadow
