@@ -5,13 +5,26 @@ import { useState } from "react";
 const StartGameScreen = () => {
   const [input, setInput] = useState("");
 
+  const handleChangeText = (text) => {
+    const filtered = text.replace(/[^0-9]/g, "");
+    setInput(filtered);
+  };
+
+  const handleReset = () => {
+    setInput("");
+  };
+
+  const handleConfirm = () => {
+    console.log("confirmed value:", input);
+    // here you can validate / parse the number
+    // const chosenNumber = parseInt(input, 10);
+  };
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
         value={input}
-        onChaogeText={(text) => {
-          setInput(text);
-        }}
+        onChangeText={handleChangeText}
         style={styles.numberInput}
         maxLength={2}
         inputMode={"numeric"}
@@ -19,22 +32,22 @@ const StartGameScreen = () => {
         autoCapitalize={"none"}
         autoCorrect={false}
       />
-      <PrimaryButton
-        onPress={() => {
-          console.log("pressed");
-        }}
-      >
-        Reset
-      </PrimaryButton>
-      <PrimaryButton onPress={() => console.log("pressed")}>
-        Confirm
-      </PrimaryButton>
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
+          <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
+        </View>
+        <View style={styles.button}>
+          <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
+    justifyContent: "center",
+    alignItems: "center",
     padding: 16,
     marginTop: 100,
     marginHorizontal: 24,
@@ -62,6 +75,9 @@ const styles = StyleSheet.create({
       },
     ],
   },
+  buttonContainer: {
+    flexDirection: "row",
+  },
   numberInput: {
     height: 50,
     width: 50,
@@ -72,6 +88,9 @@ const styles = StyleSheet.create({
     color: "#ddb52f",
     marginVertical: 8,
     textAlign: "center",
+  },
+  button: {
+    flex: 1,
   },
 });
 
