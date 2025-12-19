@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput, Alert } from "react-native";
+import { StyleSheet, View, TextInput, Alert } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
 import Colors from "../constants/colors";
@@ -53,6 +53,7 @@ const StartGameScreen = ({ onPickNumber }) => {
           keyboardType={"number-pad"}
           autoCapitalize={"none"}
           autoCorrect={false}
+          autoFocus={true}
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>

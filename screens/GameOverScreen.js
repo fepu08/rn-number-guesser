@@ -6,7 +6,7 @@ import Colors from "../constants/colors";
 
 const GameOverScreen = () => {
   const {
-    state: { guessNumber, rounds },
+    state: { guessNumber, guessRounds },
     resetGame,
   } = useGameContext();
 
@@ -20,8 +20,9 @@ const GameOverScreen = () => {
         />
       </View>
       <Text style={styles.summaryText}>
-        Your phone needed <Text style={styles.highlight}>{rounds}</Text> rounds
-        to guess the number <Text style={styles.highlight}>{guessNumber}</Text>.
+        Your phone needed{" "}
+        <Text style={styles.highlight}>{guessRounds.length}</Text> rounds to
+        guess the number <Text style={styles.highlight}>{guessNumber}</Text>.
       </Text>
       <PrimaryButton onPress={resetGame} textStyles={styles.button}>
         Play Again
