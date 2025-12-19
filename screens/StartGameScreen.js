@@ -1,8 +1,10 @@
-import { StyleSheet, View, TextInput, Alert } from "react-native";
+import { StyleSheet, View, Text, TextInput, Alert } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
 import Colors from "../constants/colors";
 import Title from "../components/ui/Title";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 const StartGameScreen = ({ onPickNumber }) => {
   const [input, setInput] = useState("");
@@ -39,8 +41,9 @@ const StartGameScreen = ({ onPickNumber }) => {
 
   return (
     <View style={styles.container}>
-      <Title>Pick a number between 1 and 99</Title>
-      <View style={styles.inputContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText>Pick a number from 1 to 99</InstructionText>
         <TextInput
           value={input}
           onChangeText={handleChangeText}
@@ -59,46 +62,19 @@ const StartGameScreen = ({ onPickNumber }) => {
             <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
           </View>
         </View>
-      </View>
+      </Card>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  inputContainer: {
-    justifyContent: "center",
+  container: {
     alignItems: "center",
-    padding: 16,
-    marginTop: 50,
-    marginHorizontal: 24,
-    backgroundColor: Colors.primary700,
-    borderRadius: 8,
-
-    // android only shadow
-    // elevation: 4,
-
-    // iOS shadow styles
-    // shadowColor: "black",
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowRadius: 6,
-    // shadowOpacity: 0.25,
-
-    // For newer Architectures
-    boxShadow: [
-      { offsetX: 0, offsetY: 4, blurRadius: 10, color: "rgba(0,0,0,0.8)" },
-      {
-        inset: true,
-        offsetX: 0,
-        offsetY: 2,
-        blurRadius: 5,
-        color: "rgba(255,0,0,0.1)",
-      },
-    ],
   },
   buttonContainer: {
     flexDirection: "row",
   },
+
   numberInput: {
     height: 50,
     width: 50,
