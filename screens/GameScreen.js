@@ -8,30 +8,31 @@ import { useGameContext } from "../components/context/gameContext";
 
 const GameScreen = () => {
   const {
-    state: { userNumber, minBoundary, maxBoundary },
+    state: { userNumber, guessNumber, minBoundary, maxBoundary },
+    setGuessNumber,
     setIsGameOver,
     setMinBoundary,
     setMaxBoundary,
   } = useGameContext();
-  const initialGuess = useMemo(() => {
-    return generateRandomBetween(minBoundary, maxBoundary, userNumber);
-  }, [generateRandomBetween, userNumber]);
-  const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
   const onGameOver = useCallback(() => {
     setIsGameOver(true);
   }, [setIsGameOver]);
 
   useEffect(() => {
-    if (currentGuess === userNumber) {
+    setGuessNumber(generateRandomBetween(minBoundary, maxBoundary, userNumber));
+  }, []);
+
+  useEffect(() => {
+    if (guessNumber === userNumber) {
       onGameOver();
     }
-  }, [onGameOver, currentGuess, userNumber]);
+  }, [onGameOver, guessNumber, userNumber]);
 
   function nextGuessHandler(direction) {
     if (
-      (direction === "less" && currentGuess < userNumber) ||
-      (direction === "greater" && currentGuess > userNumber)
+      (direction === "less" && guessNumber < userNumber) ||
+      (direction === "greater" && guessNumber > userNumber)
     ) {
       Alert.alert("Don't lie!", "You know that this is wrong...", [
         { text: "Sorry", style: "cancel" },
@@ -43,19 +44,19 @@ const GameScreen = () => {
     let newMaxBoundary = maxBoundary;
 
     if (direction === "greater") {
-      newMinBoundary = currentGuess + 1;
+      newMinBoundary = guessNumber + 1;
       setMinBoundary(newMinBoundary);
     } else if (direction === "less") {
-      newMaxBoundary = currentGuess - 1;
+      newMaxBoundary = guessNumber - 1;
       setMaxBoundary(newMaxBoundary);
     }
-    setCurrentGuess(generateRandomBetween(newMinBoundary, newMaxBoundary));
+    setGuessNumber(generateRandomBetween(newMinBoundary, newMaxBoundary));
   }
 
   return (
     <View style={styles.container}>
       <Title>Opponent's Guess</Title>
-      <NumberContainer>{currentGuess}</NumberContainer>
+      <NumberContainer>{guessNumber}</NumberContainer>
       <View>
         <Text>Greater or less?</Text>
         <View>

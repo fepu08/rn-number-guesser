@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 
 const defaultState = {
   userNumber: null,
+  guessNumber: null,
   minBoundary: 1,
   maxBoundary: 99,
   isGameOver: false,
@@ -16,6 +17,13 @@ export const GameProvider = ({ children }) => {
     setState((prev) => ({
       ...prev,
       userNumber: number,
+    }));
+  };
+
+  const setGuessNumber = (number) => {
+    setState((prev) => ({
+      ...prev,
+      guessNumber: number,
     }));
   };
 
@@ -49,6 +57,7 @@ export const GameProvider = ({ children }) => {
       value={{
         state,
         setUserNumber,
+        setGuessNumber,
         setMinBoundary,
         setMaxBoundary,
         setIsGameOver,
