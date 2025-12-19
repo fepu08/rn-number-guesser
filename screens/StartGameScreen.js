@@ -2,6 +2,7 @@ import { StyleSheet, View, TextInput, Alert } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
 import Colors from "../constants/colors";
+import Title from "../components/ui/Title";
 
 const StartGameScreen = ({ onPickNumber }) => {
   const [input, setInput] = useState("");
@@ -37,23 +38,26 @@ const StartGameScreen = ({ onPickNumber }) => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        value={input}
-        onChangeText={handleChangeText}
-        style={styles.numberInput}
-        maxLength={2}
-        inputMode={"numeric"}
-        keyboardType={"number-pad"}
-        autoCapitalize={"none"}
-        autoCorrect={false}
-      />
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
-        </View>
-        <View style={styles.button}>
-          <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
+    <View style={styles.container}>
+      <Title>Pick a number between 1 and 99</Title>
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={input}
+          onChangeText={handleChangeText}
+          style={styles.numberInput}
+          maxLength={2}
+          inputMode={"numeric"}
+          keyboardType={"number-pad"}
+          autoCapitalize={"none"}
+          autoCorrect={false}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.button}>
+            <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
+          </View>
         </View>
       </View>
     </View>
@@ -61,11 +65,12 @@ const StartGameScreen = ({ onPickNumber }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {},
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    marginTop: 100,
+    marginTop: 50,
     marginHorizontal: 24,
     backgroundColor: Colors.primary700,
     borderRadius: 8,

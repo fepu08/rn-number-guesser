@@ -1,4 +1,4 @@
-import { StyleSheet, View, Pressable, Text, Animated } from "react-native";
+import { StyleSheet, Pressable, Text, Animated } from "react-native";
 import { useRef } from "react";
 
 const AnimatedButton = ({ children, onPress }) => {

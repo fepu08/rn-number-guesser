@@ -3,7 +3,12 @@ import { Animated, Pressable, Text, StyleSheet, Easing } from "react-native";
 import Colors from "../../constants/colors";
 import { hexToRgba } from "../../utils";
 
-const PrimaryButton = ({ children, onPress, isDisabled = false }) => {
+const PrimaryButton = ({
+  children,
+  onPress,
+  textStyles,
+  isDisabled = false,
+}) => {
   const animation = useRef(new Animated.Value(0)).current;
 
   const handlePressIn = () => {
@@ -37,7 +42,7 @@ const PrimaryButton = ({ children, onPress, isDisabled = false }) => {
       disabled={isDisabled}
     >
       <Animated.View style={[styles.container, { backgroundColor }]}>
-        <Text style={styles.buttonText}>{children}</Text>
+        <Text style={[styles.buttonText, textStyles]}>{children}</Text>
       </Animated.View>
     </Pressable>
   );

@@ -22,7 +22,7 @@ export function hexToRgba(hex, alpha = 1) {
  * @param {number|undefined} exclude
  * @returns {number}
  */
-export function generateRandomBetween(min, max, exclude) {
+export function generateRandomBetween(min, max, exclude = null) {
   const random = Math.floor(Math.random() * (max - min + 1)) + min;
 
   if (random === exclude) {
