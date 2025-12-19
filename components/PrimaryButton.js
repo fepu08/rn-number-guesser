@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import { Animated, Pressable, Text, StyleSheet, Easing } from "react-native";
+import Colors from "../constants/colors";
+import { hexToRgba } from "../utils";
 
 const PrimaryButton = ({ children, onPress, isDisabled = false }) => {
   const animation = useRef(new Animated.Value(0)).current;
@@ -24,7 +26,7 @@ const PrimaryButton = ({ children, onPress, isDisabled = false }) => {
 
   const backgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#72063c", "#af1460"], // normal → lighter
+    outputRange: [Colors.primary500, Colors.primary400], // normal → lighter
   });
 
   return (
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
         offsetX: 0,
         offsetY: 3,
         blurRadius: 10,
-        color: "rgba(63,1,29,0.5)",
+        color: hexToRgba(Colors.primary700, 0.5),
       },
     ],
     margin: 4,

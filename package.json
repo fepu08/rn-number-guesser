@@ -18,6 +18,8 @@
   },
   "private": true,
   "devDependencies": {
-    "prettier": "^3.7.4"
+    "@types/react": "~19.1.10",
+    "prettier": "^3.7.4",
+    "typescript": "~5.9.2"
   }
 }

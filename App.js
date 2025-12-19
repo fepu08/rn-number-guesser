@@ -4,6 +4,7 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import GameScreen from "./screens/GameScreen";
+import Colors from "./constants/colors";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
@@ -19,7 +20,10 @@ export default function App() {
   }
 
   return (
-    <LinearGradient style={styles.container} colors={["#4e0329", "#ddb52f"]}>
+    <LinearGradient
+      style={styles.container}
+      colors={[Colors.primary700, Colors.accent500]}
+    >
       <ImageBackground
         source={require("./assets/images/background.png")}
         resizeMode={"cover"}
