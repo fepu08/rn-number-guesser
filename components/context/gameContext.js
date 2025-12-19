@@ -67,7 +67,7 @@ export const GameProvider = ({ children }) => {
   const addGuessRound = (number) => {
     setState((prev) => ({
       ...prev,
-      guessRounds: [...prev.guessRounds, number],
+      guessRounds: [number, ...prev.guessRounds],
     }));
   };
 

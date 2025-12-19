@@ -104,10 +104,12 @@ const GameScreen = () => {
             }}
             data={guessRounds}
             renderItem={({ item, index }) => (
-              <GuessLogItem guess={item} roundNumber={index + 1} />
+              <GuessLogItem
+                guess={item}
+                roundNumber={guessRounds.length - index}
+              />
             )}
             keyExtractor={(item, _) => item}
-            scrollIndicatiorInsets={{ right: 8 }}
           />
         </View>
       </View>
