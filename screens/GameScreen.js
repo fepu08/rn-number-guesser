@@ -1,6 +1,7 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Title from "../components/ui/Title";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { generateRandomBetween } from "../utils";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -68,13 +69,13 @@ const GameScreen = () => {
             onPress={() => nextGuessHandler("less")}
             containerStyles={styles.button}
           >
-            -
+            <Ionicons name={"remove"} size={24} color={"white"} />
           </PrimaryButton>
           <PrimaryButton
             onPress={() => nextGuessHandler("greater")}
             containerStyles={styles.button}
           >
-            +
+            <Ionicons name={"add"} size={24} color={"white"} />
           </PrimaryButton>
         </View>
       </Card>
