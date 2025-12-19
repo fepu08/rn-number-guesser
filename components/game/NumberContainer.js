@@ -21,8 +21,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    color: Colors.accent500,
+    fontFamily: "open-sans-bold",
     fontSize: 36,
+    color: Colors.accent500,
     fontWeight: "bold",
   },
 });
