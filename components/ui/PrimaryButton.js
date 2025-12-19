@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Animated, Pressable, Text, StyleSheet, Easing } from "react-native";
-import Colors from "../constants/colors";
-import { hexToRgba } from "../utils";
+import Colors from "../../constants/colors";
+import { hexToRgba } from "../../utils";
 
 const PrimaryButton = ({ children, onPress, isDisabled = false }) => {
   const animation = useRef(new Animated.Value(0)).current;
