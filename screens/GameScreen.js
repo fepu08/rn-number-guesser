@@ -11,11 +11,12 @@ import InstructionText from "../components/ui/InstructionText";
 
 const GameScreen = () => {
   const {
-    state: { userNumber, guessNumber, minBoundary, maxBoundary },
+    state: { userNumber, guessNumber, minBoundary, maxBoundary, rounds },
     setGuessNumber,
     setIsGameOver,
     setMinBoundary,
     setMaxBoundary,
+    setRounds,
   } = useGameContext();
 
   const onGameOver = useCallback(() => {
@@ -23,6 +24,7 @@ const GameScreen = () => {
   }, [setIsGameOver]);
 
   useEffect(() => {
+    setRounds(rounds + 1);
     setGuessNumber(generateRandomBetween(minBoundary, maxBoundary, userNumber));
   }, []);
 
@@ -42,6 +44,8 @@ const GameScreen = () => {
       ]);
       return;
     }
+
+    setRounds(rounds + 1);
 
     let newMinBoundary = minBoundary;
     let newMaxBoundary = maxBoundary;

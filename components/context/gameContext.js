@@ -6,6 +6,7 @@ const defaultState = {
   minBoundary: 1,
   maxBoundary: 99,
   isGameOver: false,
+  rounds: 0,
 };
 
 const GameContext = createContext(null);
@@ -48,6 +49,13 @@ export const GameProvider = ({ children }) => {
     }));
   };
 
+  const setRounds = (number) => {
+    setState((prev) => ({
+      ...prev,
+      rounds: number,
+    }));
+  };
+
   const resetGame = () => {
     setState(() => ({ ...defaultState }));
   };
@@ -61,6 +69,7 @@ export const GameProvider = ({ children }) => {
         setMinBoundary,
         setMaxBoundary,
         setIsGameOver,
+        setRounds,
         resetGame,
       }}
     >

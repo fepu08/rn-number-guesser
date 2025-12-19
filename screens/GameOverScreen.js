@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Image, ImageBackground } from "react-native";
+import { View, StyleSheet, Text, ImageBackground } from "react-native";
 import Title from "../components/ui/Title";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useGameContext } from "../components/context/gameContext";
@@ -6,7 +6,7 @@ import Colors from "../constants/colors";
 
 const GameOverScreen = () => {
   const {
-    state: { guessNumber },
+    state: { guessNumber, rounds },
     resetGame,
   } = useGameContext();
 
@@ -20,8 +20,8 @@ const GameOverScreen = () => {
         />
       </View>
       <Text style={styles.summaryText}>
-        Your phone needed <Text style={styles.highlight}>X</Text> rounds to
-        guess the number <Text style={styles.highlight}>Y</Text>.
+        Your phone needed <Text style={styles.highlight}>{rounds}</Text> rounds
+        to guess the number <Text style={styles.highlight}>{guessNumber}</Text>.
       </Text>
       <PrimaryButton onPress={resetGame} textStyles={styles.button}>
         Play Again
