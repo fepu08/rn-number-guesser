@@ -5,6 +5,8 @@ import { generateRandomBetween } from "../utils";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useGameContext } from "../components/context/gameContext";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 const GameScreen = () => {
   const {
@@ -57,17 +59,25 @@ const GameScreen = () => {
     <View style={styles.container}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{guessNumber}</NumberContainer>
-      <View>
-        <Text>Greater or less?</Text>
-        <View>
-          <PrimaryButton onPress={() => nextGuessHandler("greater")}>
-            +
-          </PrimaryButton>
-          <PrimaryButton onPress={() => nextGuessHandler("less")}>
+      <Card>
+        <InstructionText style={styles.instructionText}>
+          Greater or less?
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
+          <PrimaryButton
+            onPress={() => nextGuessHandler("less")}
+            containerStyles={styles.button}
+          >
             -
           </PrimaryButton>
+          <PrimaryButton
+            onPress={() => nextGuessHandler("greater")}
+            containerStyles={styles.button}
+          >
+            +
+          </PrimaryButton>
         </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -76,6 +86,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 10,
+  },
+  button: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  instructionText: {
+    marginBottom: 12,
   },
 });
 

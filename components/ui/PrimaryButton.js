@@ -6,6 +6,7 @@ import { hexToRgba } from "../../utils";
 const PrimaryButton = ({
   children,
   onPress,
+  containerStyles,
   textStyles,
   isDisabled = false,
 }) => {
@@ -41,7 +42,9 @@ const PrimaryButton = ({
       onPressOut={handlePressOut}
       disabled={isDisabled}
     >
-      <Animated.View style={[styles.container, { backgroundColor }]}>
+      <Animated.View
+        style={[styles.container, { backgroundColor }, containerStyles]}
+      >
         <Text style={[styles.buttonText, textStyles]}>{children}</Text>
       </Animated.View>
     </Pressable>
