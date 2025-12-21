@@ -1,4 +1,10 @@
-import { View, StyleSheet, Text, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ImageBackground,
+  Dimensions,
+} from "react-native";
 import Title from "../components/ui/Title";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useGameContext } from "../components/context/gameContext";
@@ -31,6 +37,8 @@ const GameOverScreen = () => {
   );
 };
 
+const { width } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -38,9 +46,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageContainer: {
-    borderRadius: 150,
-    width: 300,
-    height: 300,
+    width: width < 380 ? 150 : 300,
+    height: width < 380 ? 150 : 300,
+    borderRadius: width < 380 ? 75 : 150,
     borderWidth: 3,
     borderColor: Colors.primary800,
     marginVertical: 36,
@@ -56,15 +64,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     marginBottom: 36,
+    maxWidth: "80%",
   },
   highlight: {
     fontFamily: "open-sans-bold",
     color: Colors.primary500,
   },
   button: {
-    fontSize: 24,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    fontSize: width < 380 ? 18 : 24,
+    paddingVertical: width < 380 ? 6 : 12,
+    paddingHorizontal: width < 380 ? 12 : 24,
   },
 });
 
