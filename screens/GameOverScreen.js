@@ -37,7 +37,7 @@ const GameOverScreen = () => {
   );
 };
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -46,12 +46,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageContainer: {
-    width: width < 380 ? 150 : 300,
-    height: width < 380 ? 150 : 300,
+    width: width < 380 || height < 500 ? 150 : 300,
+    height: width < 380 || height < 500 ? 150 : 300,
     borderRadius: width < 380 ? 75 : 150,
     borderWidth: 3,
     borderColor: Colors.primary800,
-    marginVertical: 36,
+    marginVertical: height < 500 ? 10 : 36,
     overflow: "hidden",
   },
   image: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
     fontSize: 18,
     textAlign: "center",
-    marginBottom: 36,
+    marginBottom: height < 500 ? 10 : 36,
     maxWidth: "80%",
   },
   highlight: {
@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
     color: Colors.primary500,
   },
   button: {
-    fontSize: width < 380 ? 18 : 24,
-    paddingVertical: width < 380 ? 6 : 12,
-    paddingHorizontal: width < 380 ? 12 : 24,
+    fontSize: width < 380 || height < 500 ? 18 : 24,
+    paddingVertical: width < 380 || height < 500 ? 6 : 12,
+    paddingHorizontal: width < 380 || height < 500 ? 12 : 24,
   },
 });
 

@@ -1,4 +1,11 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Title from "../components/ui/Title";
 import { useCallback, useEffect } from "react";
@@ -9,6 +16,7 @@ import { useGameContext } from "../components/context/gameContext";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
 import GuessLogItem from "../components/ui/GuessLogItem";
+import useOrientation from "../assets/hooks/useOrientation";
 
 const GameScreen = () => {
   const {
@@ -19,6 +27,7 @@ const GameScreen = () => {
     setMaxBoundary,
     addGuessRound,
   } = useGameContext();
+  const { height } = useOrientation();
 
   const onGameOver = useCallback(() => {
     setIsGameOver(true);
@@ -66,54 +75,56 @@ const GameScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Title>Opponent's Guess</Title>
-      <NumberContainer>{guessNumber}</NumberContainer>
-      <Card>
-        <InstructionText style={styles.instructionText}>
-          Greater or less?
-        </InstructionText>
-        <View style={styles.buttonsContainer}>
-          <PrimaryButton
-            onPress={() => nextGuessHandler("less")}
-            containerStyles={styles.button}
-          >
-            <Ionicons name={"remove"} size={24} color={"white"} />
-          </PrimaryButton>
-          <PrimaryButton
-            onPress={() => nextGuessHandler("greater")}
-            containerStyles={styles.button}
-          >
-            <Ionicons name={"add"} size={24} color={"white"} />
-          </PrimaryButton>
-        </View>
-      </Card>
-      <View style={styles.guessRoundsLogContainer}>
-        <Text style={styles.guessRoundsLogTitle}>Previous Guesses</Text>
-        <View
-          style={{
-            flex: 1,
-            marginHorizontal: 5,
-          }}
-        >
-          <FlatList
-            style={{ flex: 1 }}
-            contentContainerStyle={{
-              paddingVertical: 8,
-              paddingHorizontal: 30,
+    <ScrollView>
+      <View style={styles.container}>
+        <Title>Opponent's Guess</Title>
+        <NumberContainer>{guessNumber}</NumberContainer>
+        <Card style={height < 500 && { marginTop: 10 }}>
+          <InstructionText style={styles.instructionText}>
+            Greater or less?
+          </InstructionText>
+          <View style={styles.buttonsContainer}>
+            <PrimaryButton
+              onPress={() => nextGuessHandler("less")}
+              containerStyles={styles.button}
+            >
+              <Ionicons name={"remove"} size={24} color={"white"} />
+            </PrimaryButton>
+            <PrimaryButton
+              onPress={() => nextGuessHandler("greater")}
+              containerStyles={styles.button}
+            >
+              <Ionicons name={"add"} size={24} color={"white"} />
+            </PrimaryButton>
+          </View>
+        </Card>
+        <View style={styles.guessRoundsLogContainer}>
+          <Text style={styles.guessRoundsLogTitle}>Previous Guesses</Text>
+          <View
+            style={{
+              flex: 1,
+              marginHorizontal: 5,
             }}
-            data={guessRounds}
-            renderItem={({ item, index }) => (
-              <GuessLogItem
-                guess={item}
-                roundNumber={guessRounds.length - index}
-              />
-            )}
-            keyExtractor={(item, _) => item}
-          />
+          >
+            <FlatList
+              style={{ flex: 1 }}
+              contentContainerStyle={{
+                paddingVertical: 8,
+                paddingHorizontal: 30,
+              }}
+              data={guessRounds}
+              renderItem={({ item, index }) => (
+                <GuessLogItem
+                  guess={item}
+                  roundNumber={guessRounds.length - index}
+                />
+              )}
+              keyExtractor={(item, _) => item}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
