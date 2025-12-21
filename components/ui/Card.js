@@ -1,8 +1,8 @@
 import Colors from "../../constants/colors";
 import { Dimensions, StyleSheet, View } from "react-native";
 
-const Card = ({ children }) => {
-  return <View style={styles.container}>{children}</View>;
+const Card = ({ children, style }) => {
+  return <View style={[styles.container, style]}>{children}</View>;
 };
 
 const { width } = Dimensions.get("window");
