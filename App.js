@@ -7,6 +7,7 @@ import { GameProvider } from "./components/context/gameContext";
 import HomeScreen from "./screens/HomeScreen";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,25 +28,28 @@ export default function App() {
   }
 
   return (
-    <GameProvider>
-      <LinearGradient
-        style={styles.container}
-        colors={[Colors.primary700, Colors.accent500]}
-      >
-        <ImageBackground
-          source={require("./assets/images/background.png")}
-          resizeMode={"cover"}
+    <>
+      <StatusBar style={"light"} />
+      <GameProvider>
+        <LinearGradient
           style={styles.container}
-          imageStyle={styles.imageBackground}
+          colors={[Colors.primary700, Colors.accent500]}
         >
-          <SafeAreaProvider>
-            <SafeAreaView style={styles.container}>
-              <HomeScreen />
-            </SafeAreaView>
-          </SafeAreaProvider>
-        </ImageBackground>
-      </LinearGradient>
-    </GameProvider>
+          <ImageBackground
+            source={require("./assets/images/background.png")}
+            resizeMode={"cover"}
+            style={styles.container}
+            imageStyle={styles.imageBackground}
+          >
+            <SafeAreaProvider>
+              <SafeAreaView style={styles.container}>
+                <HomeScreen />
+              </SafeAreaView>
+            </SafeAreaProvider>
+          </ImageBackground>
+        </LinearGradient>
+      </GameProvider>
+    </>
   );
 }
 
