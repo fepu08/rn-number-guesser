@@ -1,14 +1,7 @@
-import {
-  Alert,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Title from "../components/ui/Title";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { generateRandomBetween } from "../utils";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -27,6 +20,7 @@ const GameScreen = () => {
     setMaxBoundary,
     addGuessRound,
   } = useGameContext();
+
   const { height, getOrientation } = useOrientation();
 
   const onGameOver = useCallback(() => {
@@ -37,12 +31,11 @@ const GameScreen = () => {
     const guess = generateRandomBetween(minBoundary, maxBoundary, userNumber);
     addGuessRound(guess);
     setGuessNumber(guess);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (guessNumber === userNumber) {
-      onGameOver();
-    }
+    if (guessNumber === userNumber) onGameOver();
   }, [onGameOver, guessNumber, userNumber]);
 
   function nextGuessHandler(direction) {
@@ -62,10 +55,11 @@ const GameScreen = () => {
     if (direction === "greater") {
       newMinBoundary = guessNumber + 1;
       setMinBoundary(newMinBoundary);
-    } else if (direction === "less") {
+    } else {
       newMaxBoundary = guessNumber - 1;
       setMaxBoundary(newMaxBoundary);
     }
+
     const newGuessNumber = generateRandomBetween(
       newMinBoundary,
       newMaxBoundary,
@@ -74,101 +68,95 @@ const GameScreen = () => {
     setGuessNumber(newGuessNumber);
   }
 
-  const renderContent = () => {
-    if (getOrientation() === "landscape") {
-      return (
-        <>
-          <InstructionText
-            style={[
-              styles.instructionText,
-              { color: "white", marginBottom: 0 },
-            ]}
-          >
-            Greater or less?
-          </InstructionText>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <PrimaryButton
-              onPress={() => nextGuessHandler("less")}
-              containerStyles={styles.button}
-            >
-              <Ionicons name={"remove"} size={24} color={"white"} />
-            </PrimaryButton>
-            <NumberContainer>{guessNumber}</NumberContainer>
-            <PrimaryButton
-              onPress={() => nextGuessHandler("greater")}
-              containerStyles={styles.button}
-            >
-              <Ionicons name={"add"} size={24} color={"white"} />
-            </PrimaryButton>
-          </View>
-        </>
-      );
-    }
+  const header = useMemo(() => {
+    const isLandscape = getOrientation() === "landscape";
 
     return (
-      <>
-        <NumberContainer>{guessNumber}</NumberContainer>
-        <Card style={height < 500 && { marginTop: 10 }}>
-          <>
-            <InstructionText style={styles.instructionText}>
-              Greater or less?
-            </InstructionText>
-          </>
-          <View style={styles.buttonsContainer}>
-            <PrimaryButton
-              onPress={() => nextGuessHandler("less")}
-              containerStyles={styles.button}
-            >
-              <Ionicons name={"remove"} size={24} color={"white"} />
-            </PrimaryButton>
-            <PrimaryButton
-              onPress={() => nextGuessHandler("greater")}
-              containerStyles={styles.button}
-            >
-              <Ionicons name={"add"} size={24} color={"white"} />
-            </PrimaryButton>
-          </View>
-        </Card>
-      </>
-    );
-  };
-
-  return (
-    <ScrollView>
       <View style={styles.container}>
         <Title>Opponent's Guess</Title>
-        {renderContent()}
+
+        {isLandscape ? (
+          <>
+            <InstructionText
+              style={[
+                styles.instructionText,
+                { color: "white", marginBottom: 0 },
+              ]}
+            >
+              Greater or less?
+            </InstructionText>
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <PrimaryButton
+                onPress={() => nextGuessHandler("less")}
+                containerStyles={styles.button}
+              >
+                <Ionicons name="remove" size={24} color="white" />
+              </PrimaryButton>
+
+              <NumberContainer>{guessNumber}</NumberContainer>
+
+              <PrimaryButton
+                onPress={() => nextGuessHandler("greater")}
+                containerStyles={styles.button}
+              >
+                <Ionicons name="add" size={24} color="white" />
+              </PrimaryButton>
+            </View>
+          </>
+        ) : (
+          <>
+            <NumberContainer>{guessNumber}</NumberContainer>
+
+            <Card style={height < 500 ? { marginTop: 10 } : { marginTop: 0 }}>
+              <InstructionText style={styles.instructionText}>
+                Greater or less?
+              </InstructionText>
+
+              <View style={styles.buttonsContainer}>
+                <PrimaryButton
+                  onPress={() => nextGuessHandler("less")}
+                  containerStyles={styles.button}
+                >
+                  <Ionicons name="remove" size={24} color="white" />
+                </PrimaryButton>
+
+                <PrimaryButton
+                  onPress={() => nextGuessHandler("greater")}
+                  containerStyles={styles.button}
+                >
+                  <Ionicons name="add" size={24} color="white" />
+                </PrimaryButton>
+              </View>
+            </Card>
+          </>
+        )}
+
         <View style={styles.guessRoundsLogContainer}>
           <Text style={styles.guessRoundsLogTitle}>Previous Guesses</Text>
-          <View
-            style={{
-              flex: 1,
-              marginHorizontal: 5,
-            }}
-          >
-            <FlatList
-              style={{ flex: 1 }}
-              contentContainerStyle={{
-                paddingVertical: 8,
-                paddingHorizontal: 30,
-              }}
-              data={guessRounds}
-              renderItem={({ item, index }) => (
-                <GuessLogItem
-                  guess={item}
-                  roundNumber={guessRounds.length - index}
-                />
-              )}
-              keyExtractor={(item, _) => item}
-            />
-          </View>
         </View>
       </View>
-    </ScrollView>
+    );
+  }, [getOrientation, height, guessNumber, nextGuessHandler]);
+
+  return (
+    <FlatList
+      data={guessRounds}
+      keyExtractor={(item) => String(item)}
+      renderItem={({ item, index }) => (
+        <GuessLogItem guess={item} roundNumber={guessRounds.length - index} />
+      )}
+      contentContainerStyle={styles.listContent}
+      ListHeaderComponent={header}
+    />
   );
 };
 
 const styles = StyleSheet.create({
+  listContent: {
+    paddingVertical: 8,
+    paddingHorizontal: 30,
+  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -190,7 +178,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   guessRoundsLogContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 12,
@@ -199,13 +186,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "open-sans",
     fontSize: 26,
-  },
-  guessRoundLog: {
-    color: "white",
-    fontFamily: "open-sans",
-    fontSize: 22,
-    textAlign: "right",
-    paddingHorizontal: 50,
   },
 });
 
