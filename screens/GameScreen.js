@@ -27,7 +27,7 @@ const GameScreen = () => {
     setMaxBoundary,
     addGuessRound,
   } = useGameContext();
-  const { height } = useOrientation();
+  const { height, getOrientation } = useOrientation();
 
   const onGameOver = useCallback(() => {
     setIsGameOver(true);
@@ -74,15 +74,46 @@ const GameScreen = () => {
     setGuessNumber(newGuessNumber);
   }
 
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Title>Opponent's Guess</Title>
-        <NumberContainer>{guessNumber}</NumberContainer>
-        <Card style={height < 500 && { marginTop: 10 }}>
-          <InstructionText style={styles.instructionText}>
+  const renderContent = () => {
+    if (getOrientation() === "landscape") {
+      return (
+        <>
+          <InstructionText
+            style={[
+              styles.instructionText,
+              { color: "white", marginBottom: 0 },
+            ]}
+          >
             Greater or less?
           </InstructionText>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <PrimaryButton
+              onPress={() => nextGuessHandler("less")}
+              containerStyles={styles.button}
+            >
+              <Ionicons name={"remove"} size={24} color={"white"} />
+            </PrimaryButton>
+            <NumberContainer>{guessNumber}</NumberContainer>
+            <PrimaryButton
+              onPress={() => nextGuessHandler("greater")}
+              containerStyles={styles.button}
+            >
+              <Ionicons name={"add"} size={24} color={"white"} />
+            </PrimaryButton>
+          </View>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <NumberContainer>{guessNumber}</NumberContainer>
+        <Card style={height < 500 && { marginTop: 10 }}>
+          <>
+            <InstructionText style={styles.instructionText}>
+              Greater or less?
+            </InstructionText>
+          </>
           <View style={styles.buttonsContainer}>
             <PrimaryButton
               onPress={() => nextGuessHandler("less")}
@@ -98,6 +129,15 @@ const GameScreen = () => {
             </PrimaryButton>
           </View>
         </Card>
+      </>
+    );
+  };
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <Title>Opponent's Guess</Title>
+        {renderContent()}
         <View style={styles.guessRoundsLogContainer}>
           <Text style={styles.guessRoundsLogTitle}>Previous Guesses</Text>
           <View
